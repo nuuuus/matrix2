@@ -220,7 +220,7 @@ func Det(m *Mat) float64{
 		panic("Matrix is not a square")
 	}
 }
-func norm(m *Mat) float64{
+func Norm(m *Mat) float64{
 	return math.Sqrt(Dot(m,m))
 }
 func Dot(m,n *Mat) float64{
