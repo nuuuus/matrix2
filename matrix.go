@@ -2,6 +2,7 @@ package matrix
 
 import (
 	"fmt"
+	"math"
 )
 type Node struct{
 	val float64
@@ -218,6 +219,9 @@ func Det(m *Mat) float64{
 	} else{
 		panic("Matrix is not a square")
 	}
+}
+func norm(m *Mat) float64{
+	return math.Sqrt(Dot(m,m))
 }
 func Dot(m,n *Mat) float64{
 	if m.cols == n.cols{
