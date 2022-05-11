@@ -46,8 +46,7 @@ func (m *Mat) Get(x int, y int) float64{
 		}
 		return n.val
 	} else{
-		fmt.Println("Array bounds exceeded")
-		return -1
+		panic("Array bounds exceeded")
 	}
 
 
@@ -67,13 +66,13 @@ func (m *Mat) Set(x int, y int, value float64){
 
 func (m *Mat) Sub(r1,c1,r2,c2 int) *Mat{
 	if (r1 <= r2) && (c1 <= c2){
-		n := matrix(r2 - r1 + 1, c2 - c1 + 1)
+		n := Matrix(r2 - r1 + 1, c2 - c1 + 1)
 		for i:= 1; i <= n.rows; i++{
 			for j := 1; j <= n.cols; j++{
 				if (i + r1 - 1 > m.rows) || (j + c1 - 1 > m.cols){
 					continue
 				}else{
-					n.set(i,j,m.get(i+r1-1,j+c1-1))
+					n.Set(i,j,m.Get(i+r1-1,j+c1-1))
 				}
 			}
 		}
@@ -84,9 +83,9 @@ func (m *Mat) Sub(r1,c1,r2,c2 int) *Mat{
 }
 
 func  Size(m *Mat) *Mat{
-	n := matrix(1,2)
-	n.set(1,1,float64(m.rows))
-	n.set(1,2,float64(m.cols))
+	n := Matrix(1,2)
+	n.Set(1,1,float64(m.rows))
+	n.Set(1,2,float64(m.cols))
 	return n
 }
 func (m *Mat) Print(){
@@ -134,10 +133,10 @@ func (m *Mat) Append(s []float64){
 	m.rows += 1
 }
 func Trans(m *Mat) *Mat{
-	n := matrix(m.cols,m.rows)
+	n := Matrix(m.cols,m.rows)
 	for i := 1; i <= n.rows; i++{
 		for j := 1; j <= n.cols; j++{
-			n.set(i,j,m.get(j,i))
+			n.Set(i,j,m.Get(j,i))
 		}
 	}
 	return n
@@ -155,15 +154,15 @@ func Trans(m *Mat) *Mat{
 }*/
 func Mult(m *Mat, n *Mat) *Mat{
 	if (m.cols == n.rows){
-		r := matrix(m.rows,n.cols)
+		r := Matrix(m.rows,n.cols)
 		total := 0.0
 		for i := 1; i <= r.rows; i++{
 			for j := 1; j <= r.cols; j++{
 				total = 0
 				for k := 1; k <= r.rows; k++{
-					total += m.get(i,k) * n.get(k,j)
+					total += m.Get(i,k) * n.Get(k,j)
 				}
-				r.set(i,j,total)
+				r.Set(i,j,total)
 			}
 		} 
 		return r
@@ -174,10 +173,10 @@ func Mult(m *Mat, n *Mat) *Mat{
 	}
 }
 func (m *Mat) Mult(s float64) *Mat{
-	n := matrix(m.rows,m.cols)
+	n := Matrix(m.rows,m.cols)
 	for i := 1; i <= m.rows; i++{
 		for j := 1; j <= m.cols; j++{
-			n.set(i,j,m.get(i,j) * s)
+			n.Set(i,j,m.Get(i,j) * s)
 		}
 	}
 	return n
@@ -188,7 +187,7 @@ func (m *Mat) Init(vals ...float64){
 	count := 0;
 	for i := 1; i <= m.rows; i++{
 		for j := 1; (j <= m.cols) && (count < max); j++{
-			m.set(i,j,vals[count])
+			m.Set(i,j,vals[count])
 			count++
 		}
 	}
@@ -197,22 +196,22 @@ func Det(m *Mat) float64{
 	if m.rows == m.cols{
 
 		if m.rows == 2{
-			return m.get(1,1)*m.get(2,2) - m.get(1,2)*m.get(2,1)
+			return m.Get(1,1)*m.Get(2,2) - m.Get(1,2)*m.Get(2,1)
 		}else {
 			total := 0.0
 			for curr := 1; curr <= m.cols; curr++{
-				n := matrix(m.rows - 1, m.rows - 1)
+				n := Matrix(m.rows - 1, m.rows - 1)
 				for i := 2; i <= m.rows; i++{
 					col := 1
 					for j := 1; j <= m.cols; j++{
 						if j == curr{
 							continue
 						}
-						n.set(i-1,col,m.get(i,j))
+						n.Set(i-1,col,m.Get(i,j))
 						col++
 					}
 				}
-				total += m.get(1,curr) * det(n)
+				total += m.Get(1,curr) * det(n)
 			}
 			return total
 		}
@@ -225,7 +224,7 @@ func Dot(m,n *Mat) float64{
 		if m.rows == 1 && n.rows == 1 {
 			total := 0.0
 			for j := 1; j <= m.cols; j++{
-				total += m.get(1,j) * n.get(1,j)
+				total += m.Get(1,j) * n.Get(1,j)
 			}
 			return total
 		}
@@ -236,10 +235,10 @@ func Dot(m,n *Mat) float64{
 func Cross(m,n *Mat) *Mat{
 	if m.cols == 3 && n.cols == 3{
 		if m.rows == 1 && n.rows == 1 {
-			c := matrix(1,3)
-			c.set(1,1,(m.get(1,2)*n.get(1,3)) - (m.get(1,3)*n.get(1,2)))
-			c.set(1,2,-(m.get(1,1)*n.get(1,3)) + (m.get(1,3)*n.get(1,1)))
-			c.set(1,3,(m.get(1,1)*n.get(1,2)) - (m.get(1,2)*n.get(1,1)))
+			c := Matrix(1,3)
+			c.Set(1,1,(m.Get(1,2)*n.Get(1,3)) - (m.Get(1,3)*n.Get(1,2)))
+			c.Set(1,2,-(m.Get(1,1)*n.Get(1,3)) + (m.Get(1,3)*n.Get(1,1)))
+			c.Set(1,3,(m.Get(1,1)*n.Get(1,2)) - (m.Get(1,2)*n.Get(1,1)))
 			return c
 		}
 		panic("Matrices must consist of a single row: cross()")
