@@ -211,7 +211,7 @@ func Det(m *Mat) float64{
 						col++
 					}
 				}
-				total += m.Get(1,curr) * det(n)
+				total += m.Get(1,curr) * Det(n)
 			}
 			return total
 		}
