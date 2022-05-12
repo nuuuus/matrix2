@@ -1,6 +1,6 @@
 package matrix
 
-func (m *Mat) Add(n *Mat){
+func (m *Mat) Add(n *Mat) *Mat{
 	if (m.rows == n.rows) && (m.cols == n.cols){
 		r := Matrix(m.rows,m.cols)
 		for i := 1; i <= r.rows; i++{
