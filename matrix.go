@@ -341,6 +341,25 @@ func Add(m ...*Mat) *Mat {
 		panic("Matrices aren't the same size: Add()")
 	}
 }
+func (m *Mat) Add(s float64) *Mat {
+	r := Matrix(m.rows, m.cols)
+	sm := m.topleftcorner
+	tm := m.topleftcorner
+	sr := r.topleftcorner
+	tr := r.topleftcorner
+	for i := 0; i < m.rows; i++ {
+		for j := 0; j < m.cols; j++ {
+			tr.val = tm.val + s
+			tr = tr.right
+			tm = tm.right
+		}
+		sr = sr.down
+		sm = sm.down
+		tr = sr
+		tm = sm
+	}
+	return r
+}
 func Span(s, interval, f float64) *Mat {
 	m := &Mat{}
 	m.topleftcorner = &Node{}
