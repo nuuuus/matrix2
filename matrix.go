@@ -93,7 +93,7 @@ func (m *Mat)Rows() int {
 	return m.rows
 }
 func (m *Mat)Cols() int {
-	return m.Cols
+	return m.cols
 }
 func (m *Mat) Print() {
 	n := m.topleftcorner
