@@ -192,6 +192,34 @@ func Mult(m *Mat, n *Mat) *Mat {
 		return r
 	}
 }
+func Elemult(m, n *Mat) *Mat {
+	r := Matrix(m.rows, m.cols)
+	if (m.rows == n.rows) && (m.cols == n.cols) {
+		sm := m.topleftcorner
+		sn := n.topleftcorner
+		sr := r.topleftcorner
+		tm := m.topleftcorner
+		tn := n.topleftcorner
+		tr := r.topleftcorner
+		for i := 0; i < m.rows; i++ {
+			for j := 0; j < m.cols; j++ {
+				tr.val = tm.val * tn.val
+				tr = tr.right
+				tm = tm.right
+				tn = tn.right
+			}
+			sm = sm.down
+			sn = sn.down
+			sr = sr.down
+			tm = sm
+			tn = sn
+			tr = sr
+		}
+	} else {
+		fmt.Println("ERROR: Matrices are different sizes: Elemult")
+	}
+	return r
+}
 func (m *Mat) Mult(s float64) *Mat {
 	n := Matrix(m.rows, m.cols)
 	for i := 1; i <= m.rows; i++ {
