@@ -179,7 +179,7 @@ func Mult(m *Mat, n *Mat) *Mat {
 		for i := 1; i <= r.rows; i++ {
 			for j := 1; j <= r.cols; j++ {
 				total = 0
-				for k := 1; k <= r.rows; k++ {
+				for k := 1; k <= m.cols; k++ {
 					total += m.Get(i, k) * n.Get(k, j)
 				}
 				r.Set(i, j, total)
