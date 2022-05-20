@@ -89,6 +89,12 @@ func Size(m *Mat) *Mat {
 	n.Set(1, 2, float64(m.cols))
 	return n
 }
+func (m *Mat)Rows() int {
+	return m.rows
+}
+func (m *Mat)Cols() int {
+	return m.Cols
+}
 func (m *Mat) Print() {
 	n := m.topleftcorner
 	for i := 0; i < m.rows; i++ {
