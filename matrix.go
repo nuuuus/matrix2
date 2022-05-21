@@ -1,8 +1,12 @@
 package matrix
 
 import (
+	"encoding/csv"
 	"fmt"
+	"log"
 	"math"
+	"os"
+	"strconv"
 )
 
 type Node struct {
