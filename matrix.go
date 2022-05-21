@@ -311,6 +311,18 @@ func (m *Mat) Copy() *Mat {
 	}
 	return n
 }
+func (m *Mat) Clear() {
+	s := m.topleftcorner
+	t := m.topleftcorner
+	for i := 0; i < m.rows; i++ {
+		for j := 0; j < m.cols; j++ {
+			t.val = 0
+			t = t.right
+		}
+		s = s.down
+		t = s
+	}
+}
 
 func Add(m ...*Mat) *Mat {
 	cont := 1
