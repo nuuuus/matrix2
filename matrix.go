@@ -400,3 +400,27 @@ func Span(s, interval, f float64) *Mat {
 	}
 	return m
 }
+func Csv2Mat(filename string) *Mat {
+	f, err := os.Open(filename)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+	c := csv.NewReader(f)
+	data, _ := c.ReadAll()
+	rows := len(data)
+	cols := len(data[0])
+	m := Matrix(rows, cols)
+	s := m.topleftcorner
+	t := m.topleftcorner
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
+			fl, _ := strconv.ParseFloat(data[i][j], 64)
+			t.val = fl
+			t = t.right
+		}
+		s = s.down
+		t = s
+	}
+	return m
+}
